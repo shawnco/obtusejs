@@ -1,34 +1,43 @@
-<p>In this example we have an observable called numbers, which is observed in 3 places. Whenever it outputs a number, the three observers do slightly different things to it.</p>
+<p>This example demonstrates a basic controller. Below you'll see the Picard
+controller load and show his age!</p>
 
-<span id='observer-1'></span>
-<span id='observer-2'></span>
-<span id='observer-3'></span>
+<div id='route-view'></div>
 
-<script src='classes/observable.js'></script>
-<script>
-    // The observable just returns the value
-    var numbers = new Observable(function(mult){
-        return mult;
+<script type="text/javascript" src="classes/http.js"></script>
+<script type="text/javascript" src="classes/observable.js"></script>
+<script type="text/javascript" src="classes/router.js"></script>
+<script type="text/javascript" src="classes/component.js"></script>
+<script type="text/javascript">
+
+    var picard = new Component('views/picard.html', function(){
+    this.name = 'Jean-Luc Picard';
+    this.age = 58;
+    
+    this.ageUp = function() {
+        console.log('called!')
+        this.age++;
+    }
+    
+    this.show = function(index) {
+        for (var i=0; i < 3; i++) {
+        if (i === index) {
+            document.getElementById('ship-' + i).style.display = 'inline';
+        } else {
+            document.getElementById('ship-' + i).style.display = 'none;'
+        }
+        }
+    }
+    
+    this.hide = function(index) {
+        for (var i=0; i < 3; i++) {
+        if (i === index) {
+            document.getElementById('ship-' + i).style.display = 'none';
+        } else {
+            document.getElementById('ship-' + i).style.display = 'inline';
+        }
+        }          
+    }
+    
     });
-
-    // Kick off the observable
-    var n = 0;
-    setInterval(function(){
-        numbers.run(n);
-        n++;
-    }, 2000);
-
-    // Watch the observable and do things with the output
-    numbers.observe(function(val){
-        document.getElementById('observer-1').innerHTML += 'Observer 1 gives ' + val*2 + '<br/>';
-    });
-
-    numbers.observe(function(val){
-        console.log('got here', val)
-        document.getElementById('observer-2').innerHTML += 'Observer 2 gives ' + val*10 + '<br/>';
-    });
-
-    numbers.observe(function(val){
-        document.getElementById('observer-3').innerHTML += 'Observer 3 gives ' + (val+5) + '<br/>';
-    });
+    
 </script>

@@ -1,0 +1,22 @@
+<style>
+        #ship-0, #ship-1, #ship-2 {
+          display: none;
+        }
+      </style>
+      
+      
+      Captain {{name}} is {{age}}, yes {{age}} years old!
+      
+      <button onclick="picard.component.ageUp()">Age him</button>
+      
+      <div>
+        <div id='capt-0' onmouseenter='picard.component.show(0)' onmouseleave='picard.component.hide(0)'>
+          Jean-Luc Picard<span id='ship-0'> is captain of the Enterprise</span>
+        </div>
+        <div id='capt-1' onmouseenter='picard.component.show(1)' onmouseleave='picard.component.hide(1)'>
+          Ben Sisko<span id='ship-1'> is captain of the Defiant</span>
+        </div>
+        <div id='capt-2' onmouseenter='picard.component.show(2)' onmouseleave='picard.component.hide(2)'>
+          Kathryn Janeway<span id='ship-2'> is captain of the Voyager</span>
+        </div>  
+      </div>
