@@ -1,34 +1,32 @@
-<p>In this example we have an observable called numbers, which is observed in 3 places. Whenever it outputs a number, the three observers do slightly different things to it.</p>
+<p>Putting things together by wrapping them in an overarching Obtuse object.</p>
 
-<span id='observer-1'></span>
-<span id='observer-2'></span>
-<span id='observer-3'></span>
+<div data-obtuse>
+  <ul>
+    <li><a href='#picard'>Picard</a></li>
+    <li><a href='#sisko'>Sisko</a></li>
+    <li><a href='#janeway'>Janeway</a></li>
+  </ul>
+  <div id='captain-view'></div>
+</div>
 
-<script src='classes/observable.js'></script>
-<script>
-    // The observable just returns the value
-    var numbers = new Observable(function(mult){
-        return mult;
-    });
-
-    // Kick off the observable
-    var n = 0;
-    setInterval(function(){
-        numbers.run(n);
-        n++;
-    }, 2000);
-
-    // Watch the observable and do things with the output
-    numbers.observe(function(val){
-        document.getElementById('observer-1').innerHTML += 'Observer 1 gives ' + val*2 + '<br/>';
-    });
-
-    numbers.observe(function(val){
-        console.log('got here', val)
-        document.getElementById('observer-2').innerHTML += 'Observer 2 gives ' + val*10 + '<br/>';
-    });
-
-    numbers.observe(function(val){
-        document.getElementById('observer-3').innerHTML += 'Observer 3 gives ' + (val+5) + '<br/>';
-    });
+<script type="text/javascript" src="classes/http.js"></script>
+<script type="text/javascript" src="classes/observable.js"></script>
+<script type="text/javascript" src="classes/router.js"></script>
+<script type="text/javascript" src="classes/component.js"></script>
+<script type="text/javascript" src="classes/obtuse.js"></script>
+<script type="text/javascript">
+  var app = new Obtuse('captain-view', [
+    {route: 'picard', templateFile: 'views/picard.html'},
+    {route: 'sisko', templateFile: 'views/sisko.html'},
+    {route: 'janeway', templateFile: 'views/janeway.html'}
+  ]);
+  
+  app.component('picard', 'views/picard.html', function(){
+    this.age = 58;
+    this.name = 'Picard';
+  });
+  app.component('sisko', 'views/sisko.html', function(){
+    this.age = 40;
+    this.name = 'Ben Sisko';
+  })
 </script>
