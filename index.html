@@ -1,34 +1,30 @@
-<p>In this example we have an observable called numbers, which is observed in 3 places. Whenever it outputs a number, the three observers do slightly different things to it.</p>
+<p>Below we have a list of links, this time with paramters attached to their routes.</p>
 
-<span id='observer-1'></span>
-<span id='observer-2'></span>
-<span id='observer-3'></span>
+<ul>
+    <li><a href='#picard/58'>Picard</a></li>
+    <li><a href='#kirk'>Kirk</a></li>
+    <li><a href='#sisko/Defiant'>Sisko</a></li>
+</ul>
+<div id='router-view'></div>
 
 <script src='classes/observable.js'></script>
+<script src='classes/router.js'></script>
 <script>
-    // The observable just returns the value
-    var numbers = new Observable(function(mult){
-        return mult;
-    });
-
-    // Kick off the observable
-    var n = 0;
-    setInterval(function(){
-        numbers.run(n);
-        n++;
-    }, 2000);
-
-    // Watch the observable and do things with the output
-    numbers.observe(function(val){
-        document.getElementById('observer-1').innerHTML += 'Observer 1 gives ' + val*2 + '<br/>';
-    });
-
-    numbers.observe(function(val){
-        console.log('got here', val)
-        document.getElementById('observer-2').innerHTML += 'Observer 2 gives ' + val*10 + '<br/>';
-    });
-
-    numbers.observe(function(val){
-        document.getElementById('observer-3').innerHTML += 'Observer 3 gives ' + (val+5) + '<br/>';
-    });
+    // Build our routes
+    var routes = [
+        {
+            route: 'picard/:age',
+            content: 'Jean-Luc Picard of the USS Enterprise is {{age}}, yes {{age}} years old.'
+        },
+        {
+            route: 'kirk',
+            content: 'James Tiberius Kirk of the USS Enterprise'
+        },
+        {
+            route: 'sisko/:ship',
+            content: 'Benjamin Sisko of Starbase Deep Space Nine is also captain of the USS {{ship}}'
+        }
+    ];
+    // Create our router
+    var router = new Router('router-view', routes);
 </script>
